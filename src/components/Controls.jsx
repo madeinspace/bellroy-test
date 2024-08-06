@@ -13,14 +13,18 @@ const Controls = () => {
   }, [handleKeyDown]);
 
   return (
+    <>
     <div className="controls">
       <button onClick={rotateRobot}>Rotate</button>
       <button onClick={moveRobot}>Move</button>
+    </div>
+    <div className="cardinal-controls">
       <button onClick={() => setDirectionAndMove('N')}>N</button>
       <button onClick={() => setDirectionAndMove('E')}>E</button>
       <button onClick={() => setDirectionAndMove('S')}>S</button>
       <button onClick={() => setDirectionAndMove('W')}>W</button>
     </div>
+    </>
   );
 };
 
