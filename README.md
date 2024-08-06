@@ -1,4 +1,4 @@
-# Vite React TypeScript Chakra Apollo Project
+# Vite React Project
 
 This project is a sample web application built with Vite, and React as part as a technical test for Bellroy.
 
