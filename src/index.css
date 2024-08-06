@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+  background-image: url('https://bellroy-cms-images.imgix.net/1259/background-texture-repeat.jpg?auto=format&fit=max');
+}
+
+.grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  grid-template-rows: repeat(5, 50px);
+  gap: 2px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #e15a1d;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.robot {
+  position: relative;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.robot-svg {
+  /* transition: transform 0.5s ease-in-out; */
+}
