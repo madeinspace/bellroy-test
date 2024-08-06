@@ -5,13 +5,13 @@ import Footer from "./components/Footer"
 
 const App = () => {
   return (
-    <RobotProvider>
-      <div className="App">
-        <Grid />
-        <Controls />
-        <Footer />
-      </div>
-    </RobotProvider>
+    <div className="App">
+      <RobotProvider>
+          <Grid />
+          <Controls />
+          <Footer />
+      </RobotProvider>
+    </div>
   );
 };
 
