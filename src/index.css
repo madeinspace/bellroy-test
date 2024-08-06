@@ -117,3 +117,23 @@ body {
 .controls button:hover, .cardinal-controls button:hover {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.footer {
+  font-size: 0.9em;
+  color:#e15a1d;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a {
+  color: #e15a1d;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
