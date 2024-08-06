@@ -4,9 +4,10 @@ const RobotContext = createContext();
 
 export const useRobot = () => useContext(RobotContext);
 
-export const RobotProvider = ({ children }) => {
+export const RobotProvider = ({ children, gridSize }) => {
+
   const [robotState, setRobotState] = useState({
-    position: { x: 2, y: 2 },
+    position: { x: Math.floor(gridSize / 2), y: Math.floor(gridSize / 2) },
     direction: 'E',
   });
 
@@ -32,10 +33,10 @@ export const RobotProvider = ({ children }) => {
         if (y > 0) y -= 1;
         break;
       case 'E':
-        if (x < 4) x += 1;
+        if (x < gridSize -1) x += 1;
         break;
       case 'S':
-        if (y < 4) y += 1;
+        if (y < gridSize -1 ) y += 1;
         break;
       case 'W':
         if (x > 0) x -= 1;
@@ -112,6 +113,7 @@ export const RobotProvider = ({ children }) => {
   return (
     <RobotContext.Provider
       value={{
+        gridSize,
         robotState,
         rotateRobot,
         moveRobot,
@@ -123,5 +125,3 @@ export const RobotProvider = ({ children }) => {
     </RobotContext.Provider>
   );
 };
-
-
