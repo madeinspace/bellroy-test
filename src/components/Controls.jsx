@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRobot } from './RobotContext';
 
 const Controls = () => {
-  const { setDirectionAndMove, handleKeyDown } = useRobot();
+  const { setDirectionAndMove, handleKeyDown, rotateRobot, moveRobot } = useRobot();
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -14,6 +14,8 @@ const Controls = () => {
 
   return (
     <div className="controls">
+      <button onClick={rotateRobot}>Rotate</button>
+      <button onClick={moveRobot}>Move</button>
       <button onClick={() => setDirectionAndMove('N')}>N</button>
       <button onClick={() => setDirectionAndMove('E')}>E</button>
       <button onClick={() => setDirectionAndMove('S')}>S</button>

@@ -8,6 +8,26 @@ export const RobotProvider = ({ children }) => {
     direction: 'E',
   });
 
+  const rotateRobot = () => {
+    setRobotState(prevState => {
+      const newDirection = (() => {
+        switch (prevState.direction) {
+          case 'N':
+            return 'E';
+          case 'E':
+            return 'S';
+          case 'S':
+            return 'W';
+          case 'W':
+            return 'N';
+          default:
+            return 'E';
+        }
+      })();
+      return { ...prevState, direction: newDirection };
+    });
+  };
+
   const moveRobot = () => {
     setRobotState((prevState) => {
       let { x, y } = prevState.position;
@@ -84,6 +104,7 @@ export const RobotProvider = ({ children }) => {
     <RobotContext.Provider
       value={{
         robotState,
+        rotateRobot,
         moveRobot,
         setDirectionAndMove,
         handleKeyDown,
