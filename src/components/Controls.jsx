@@ -24,6 +24,7 @@ const Controls = () => {
       <button onClick={() => setDirectionAndMove('S')}>S</button>
       <button onClick={() => setDirectionAndMove('W')}>W</button>
     </div>
+    <h3 className='bellroy-orange'>(you can also use the arrows to move the bellroybot)</h3>
     </>
   );
 };

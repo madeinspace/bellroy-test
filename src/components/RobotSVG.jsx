@@ -19,7 +19,7 @@ const RobotSVG = ({ direction }) => {
   return (
     <svg
       className="robot-svg"
-      style={{ transform: getTransformationStyle(direction) }}
+      style={{ transform: getTransformationStyle(direction), fill:"#e15a1d" }}
       viewBox="36.571 14.2 25.859 29.6"
       width="25.859"
       height="29.6"

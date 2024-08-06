@@ -11,10 +11,12 @@ const Grid = () => {
 
     for (let y = 0; y < 5; y++) {
       for (let x = 0; x < 5; x++) {
+
+        const isRobotCell = position.x === x && position.y === y 
         grid.push(
-          <div key={`${x}-${y}`} className="cell">
+          <div key={`${x}-${y}`}  className={`cell ${isRobotCell ? 'robot-cell' : ''}`}>
             {/* {`${x}-${y}`} */}
-            {position.x === x && position.y === y && (
+            {isRobotCell && (
               <RobotSVG direction={direction} />
             )}
           </div>
