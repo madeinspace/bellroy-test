@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import Loader from './Loader';
+import { getGridSize } from '../api/getGridSize';
 
 const RobotContext = createContext();
 
@@ -42,13 +43,6 @@ const getNextPosition = (currentDirection, { x, y }, gridSize) => {
   }
 };
 
-async function getSize() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(5);
-    }, 1000);
-  });
-}
 
 export const RobotProvider = ({ children }) => {
 
@@ -58,10 +52,9 @@ export const RobotProvider = ({ children }) => {
     direction: 'E',
   });
 
-
   useEffect(() => {
     async function fetchSize() {
-      const size = await getSize();
+      const size = await getGridSize();
       setGridSize(size);
       setRobotState({
         position: { x: Math.floor(size / 2), y: Math.floor(size / 2) },
