@@ -4,6 +4,13 @@ const RobotContext = createContext();
 
 export const useRobot = () => useContext(RobotContext);
 
+const directionMap = {
+  ArrowUp: 'N',
+  ArrowRight: 'E',
+  ArrowDown: 'S',
+  ArrowLeft: 'W',
+};
+
 export const RobotProvider = ({ children, gridSize }) => {
 
   const [robotState, setRobotState] = useState({
@@ -60,41 +67,10 @@ export const RobotProvider = ({ children, gridSize }) => {
       return { ...prevState, position: newPosition };
     });
   };
-
+  
   const handleKeyDown = useCallback(
     (event) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          setRobotState((prevState) => ({
-            ...prevState,
-            direction: 'N',
-          }));
-          moveRobot();
-          break;
-        case 'ArrowRight':
-          setRobotState((prevState) => ({
-            ...prevState,
-            direction: 'E',
-          }));
-          moveRobot();
-          break;
-        case 'ArrowDown':
-          setRobotState((prevState) => ({
-            ...prevState,
-            direction: 'S',
-          }));
-          moveRobot();
-          break;
-        case 'ArrowLeft':
-          setRobotState((prevState) => ({
-            ...prevState,
-            direction: 'W',
-          }));
-          moveRobot();
-          break;
-        default:
-          break;
-      }
+      setDirectionAndMove(directionMap[event.key]);
     },
     [moveRobot]
   );
