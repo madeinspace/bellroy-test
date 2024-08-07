@@ -1,10 +1,14 @@
 import React from 'react';
+import { useRobot } from './RobotContext';
 import RobotSVG from './RobotSVG';
 
-const Cell = ({ isRobotCell }) => {
+const Cell = ({ x, y }) => {
+  const { isRobotCell } = useRobot();
+  const robotCell = isRobotCell(x, y);
+
   return (
-    <div className={`cell ${isRobotCell ? 'robot-cell' : ''}`}>
-      {isRobotCell && <RobotSVG />}
+    <div className={`cell ${robotCell ? 'robot-cell' : ''}`}>
+      {robotCell && <RobotSVG />}
     </div>
   );
 };

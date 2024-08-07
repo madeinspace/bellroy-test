@@ -104,6 +104,10 @@ export const RobotProvider = ({ children }) => {
     [moveRobot]
   );
 
+  const isRobotCell = (x, y) => {
+    return robotState.position.x === x && robotState.position.y === y;
+  };
+
   if (gridSize === null) {
     return <Loader />;
   }
@@ -113,6 +117,7 @@ export const RobotProvider = ({ children }) => {
       value={{
         gridSize,
         robotState,
+        isRobotCell,
         rotateRobot,
         moveRobot,
         setDirectionAndMove,
