@@ -5,6 +5,11 @@ import Cell from './Cell';
 const Grid = () => {
   const { gridSize } = useRobot();
 
+  const gridStyle = {
+     gridTemplateColumns: `repeat(${gridSize}, 50px)`, 
+     gridTemplateRows: `repeat(${gridSize}, 50px)` 
+  }
+
   const createGrid = () => {
     const grid = [];
 
@@ -21,7 +26,7 @@ const Grid = () => {
     <div className="grid-container">
       <div
         className="grid"
-        style={{ gridTemplateColumns: `repeat(${gridSize}, 50px)`, gridTemplateRows: `repeat(${gridSize}, 50px)` }}
+        style={gridStyle}
       >
         {createGrid()}
       </div>
