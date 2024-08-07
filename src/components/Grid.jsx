@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRobot } from './RobotContext';
-import RobotSVG from './RobotSVG';
+import Cell from './Cell';
 
 const Grid = () => {
   const { robotState, gridSize } = useRobot();
-  const { position, direction } = robotState;
+  const { position } = robotState;
 
   const createGrid = () => {
     const grid = [];
@@ -13,12 +13,7 @@ const Grid = () => {
       for (let x = 0; x < gridSize; x++) {
 
         const isRobotCell = position.x === x && position.y === y 
-        grid.push(
-          <div key={`${x}-${y}`}  className={`cell ${isRobotCell ? 'robot-cell' : ''}`}>
-            {/* {`${x}-${y}`} */}
-            {isRobotCell && <RobotSVG />}
-          </div>
-        );
+        grid.push(<Cell key={`${x}-${y}`} isRobotCell={isRobotCell} />);
       }
     }
 

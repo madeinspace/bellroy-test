@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import Loader from './Loader';
 
 const RobotContext = createContext();
 
@@ -11,48 +12,65 @@ const directionMap = {
   ArrowLeft: 'W',
 };
 
-export const RobotProvider = ({ children, gridSize }) => {
+const getNextDirection = (currentDirection) => {
+  switch (currentDirection) {
+    case 'N':
+      return 'E';
+    case 'E':
+      return 'S';
+    case 'S':
+      return 'W';
+    case 'W':
+      return 'N';
+    default:
+      return 'E';
+  }
+};
 
+const getNextPosition = (currentDirection, { x, y }, gridSize) => {
+  switch (currentDirection) {
+    case 'N':
+      return { x, y: y > 0 ? y - 1 : y };
+    case 'E':
+      return { x: x < gridSize - 1 ? x + 1 : x, y };
+    case 'S':
+      return { x, y: y < gridSize - 1 ? y + 1 : y };
+    case 'W':
+      return { x: x > 0 ? x - 1 : x, y };
+    default:
+      return { x, y };
+  }
+};
+
+async function getSize() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(5);
+    }, 1000);
+  });
+}
+
+export const RobotProvider = ({ children }) => {
+
+  const [gridSize, setGridSize] = useState(null);
   const [robotState, setRobotState] = useState({
     position: { x: Math.floor(gridSize / 2), y: Math.floor(gridSize / 2) },
     direction: 'E',
   });
 
-  const getNextDirection = (currentDirection) => {
-    switch (currentDirection) {
-      case 'N':
-        return 'E';
-      case 'E':
-        return 'S';
-      case 'S':
-        return 'W';
-      case 'W':
-        return 'N';
-      default:
-        return 'E';
-    }
-  };
 
-  const getNextPosition = (currentDirection, currentPosition) => {
-    let { x, y } = currentPosition;
-    switch (currentDirection) {
-      case 'N':
-        if (y > 0) y -= 1;
-        break;
-      case 'E':
-        if (x < gridSize -1) x += 1;
-        break;
-      case 'S':
-        if (y < gridSize -1 ) y += 1;
-        break;
-      case 'W':
-        if (x > 0) x -= 1;
-        break;
-      default:
-        break;
+  useEffect(() => {
+    async function fetchSize() {
+      const size = await getSize();
+      setGridSize(size);
+      setRobotState({
+        position: { x: Math.floor(size / 2), y: Math.floor(size / 2) },
+        direction: 'E',
+      });
     }
-    return {x, y}
-  }
+
+    fetchSize();
+  }, []);
 
   const rotateRobot = () => {
     setRobotState(prevState => {
@@ -61,12 +79,12 @@ export const RobotProvider = ({ children, gridSize }) => {
     });
   };
 
-  const moveRobot = () => {
-    setRobotState((prevState) => {
-      const newPosition = getNextPosition(prevState.direction, prevState.position)
-      return { ...prevState, position: newPosition };
-    });
-  };
+  const moveRobot = useCallback(() => {
+    setRobotState((prevState) => ({
+      ...prevState,
+      position: getNextPosition(prevState.direction, prevState.position, gridSize),
+    }));
+  }, [gridSize]);
   
   const handleKeyDown = useCallback(
     (event) => {
@@ -85,6 +103,10 @@ export const RobotProvider = ({ children, gridSize }) => {
     },
     [moveRobot]
   );
+
+  if (gridSize === null) {
+    return <Loader />;
+  }
 
   return (
     <RobotContext.Provider
