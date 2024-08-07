@@ -16,9 +16,7 @@ const Grid = () => {
         grid.push(
           <div key={`${x}-${y}`}  className={`cell ${isRobotCell ? 'robot-cell' : ''}`}>
             {/* {`${x}-${y}`} */}
-            {isRobotCell && (
-              <RobotSVG direction={direction} />
-            )}
+            {isRobotCell && <RobotSVG />}
           </div>
         );
       }

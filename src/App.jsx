@@ -37,8 +37,8 @@ const App = () => {
       <RobotProvider gridSize={gridSize}>
           <Grid />
           <Controls />
-          <Footer />
       </RobotProvider>
+      <Footer />
     </div>
   );
 };

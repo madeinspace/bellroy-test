@@ -1,6 +1,10 @@
 import React from 'react';
+import { useRobot } from './RobotContext';
 
-const RobotSVG = ({ direction }) => {
+const RobotSVG = () => {
+
+  const { robotState: {direction} } = useRobot();
+
   const getTransformationStyle = (direction) => {
     switch (direction) {
       case 'N':
