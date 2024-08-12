@@ -43,34 +43,36 @@ const getNextPosition = (currentDirection, { x, y }, gridSize) => {
   }
 };
 
-
 export const RobotProvider = ({ children }) => {
-
   const [gridSize, setGridSize] = useState(null);
   const [robotState, setRobotState] = useState({
-    position: { x: Math.floor(gridSize / 2), y: Math.floor(gridSize / 2) },
+    position: null,
     direction: 'E',
   });
 
   useEffect(() => {
-    async function fetchSize() {
-      const size = await getGridSize();
-      setGridSize(size);
-      setRobotState({
-        position: { x: Math.floor(size / 2), y: Math.floor(size / 2) },
-        direction: 'E',
-      });
-    }
+    const fetchSize = async () => {
+      try {
+        const size = await getGridSize();
+        setGridSize(size);
+        setRobotState({
+          position: { x: Math.floor(size / 2), y: Math.floor(size / 2) },
+          direction: 'E',
+        });
+      } catch (error) {
+        console.error('Failed to fetch grid size:', error);
+      }
+    };
 
     fetchSize();
   }, []);
 
-  const rotateRobot = () => {
-    setRobotState(prevState => {
+  const rotateRobot = useCallback(() => {
+    setRobotState((prevState) => {
       const newDirection = getNextDirection(prevState.direction);
       return { ...prevState, direction: newDirection };
     });
-  };
+  }, []);
 
   const moveRobot = useCallback(() => {
     setRobotState((prevState) => ({
@@ -78,13 +80,6 @@ export const RobotProvider = ({ children }) => {
       position: getNextPosition(prevState.direction, prevState.position, gridSize),
     }));
   }, [gridSize]);
-  
-  const handleKeyDown = useCallback(
-    (event) => {
-      setDirectionAndMove(directionMap[event.key]);
-    },
-    [moveRobot]
-  );
 
   const setDirectionAndMove = useCallback(
     (direction) => {
@@ -97,9 +92,22 @@ export const RobotProvider = ({ children }) => {
     [moveRobot]
   );
 
-  const isRobotCell = (x, y) => {
-    return robotState.position.x === x && robotState.position.y === y;
-  };
+  const handleKeyDown = useCallback(
+    (event) => {
+      const direction = directionMap[event.key];
+      if (direction) {
+        setDirectionAndMove(direction);
+      }
+    },
+    [setDirectionAndMove]
+  );
+
+  const isRobotCell = useCallback(
+    (x, y) => {
+      return robotState.position?.x === x && robotState.position?.y === y;
+    },
+    [robotState.position]
+  );
 
   if (gridSize === null) {
     return <Loader />;

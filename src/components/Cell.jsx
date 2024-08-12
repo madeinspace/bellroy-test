@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { useRobot } from './RobotContext';
 import RobotSVG from './RobotSVG';
 
 const Cell = ({ x, y }) => {
   const { isRobotCell } = useRobot();
-  const robotCell = isRobotCell(x, y);
+  
+  const isRobot = useCallback(() => isRobotCell(x, y), [isRobotCell, x, y]);
 
   return (
-    <div className={`cell ${robotCell ? 'robot-cell' : ''}`}>
-      {robotCell && <RobotSVG />}
+    <div className={`cell ${isRobot() ? 'robot-cell' : ''}`}>
+      {isRobot() && <RobotSVG />}
     </div>
   );
 };
 
-export default Cell;
+export default memo(Cell);
