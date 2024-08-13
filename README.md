@@ -1,4 +1,4 @@
-# Vite React Project
+# Vite React Project (Toy robot)
 
 This project is a sample web application built with Vite, Typescript and React as part as a technical test for Bellroy.
 
