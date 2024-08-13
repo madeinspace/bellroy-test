@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect,beforeEach } from 'vitest';
-import { useRobot } from './RobotContext';
-import Grid from './Grid';
-import Cell from './Cell';
+import { useRobot } from '../RobotContext';
+import Grid from '../Grid';
+import Cell from '../Cell';
 
-vi.mock('./RobotContext');
-vi.mock('./Cell', () => ({
+vi.mock('../RobotContext');
+vi.mock('../Cell', () => ({
   __esModule: true,
   default: ({ x, y }) => <div data-testid={`cell-${x}-${y}`} />,
 }));

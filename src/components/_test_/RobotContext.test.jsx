@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect,beforeEach } from 'vitest';
-import { RobotProvider, useRobot } from './RobotContext';
-import Loader from './Loader';
-import { getGridSize } from '../api/getGridSize';
+import { RobotProvider, useRobot } from '../RobotContext';
+import Loader from '../Loader';
+import { getGridSize } from '../../api/getGridSize';
 
-vi.mock('../api/getGridSize');
-vi.mock('./Loader', () => ({
+vi.mock('../../api/getGridSize');
+vi.mock('../Loader', () => ({
   __esModule: true,
   default: () => <div data-testid="loader" />,
 }));

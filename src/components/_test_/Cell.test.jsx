@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
-import { useRobot } from './RobotContext';
-import Cell from './Cell';
-import RobotSVG from './RobotSVG';
+import { useRobot } from '../RobotContext';
+import Cell from '../Cell';
+import RobotSVG from '../RobotSVG';
 
-vi.mock('./RobotContext');
-vi.mock('./RobotSVG', () => ({
+vi.mock('../RobotContext');
+vi.mock('../RobotSVG', () => ({
   __esModule: true,
   default: () => <div data-testid="robot-svg" />,
 }));

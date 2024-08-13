@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect,beforeEach } from 'vitest';
-import Controls from './Controls';
-import { useRobot } from './RobotContext';
+import Controls from '../Controls';
+import { useRobot } from '../RobotContext';
 
-vi.mock('./RobotContext');
+vi.mock('../RobotContext');
 
 describe('Controls component', () => {
   const mockSetDirectionAndMove = vi.fn();
