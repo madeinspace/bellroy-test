@@ -22,7 +22,7 @@ const Grid = () => {
   }, [gridSize]);
 
   return (
-    <div className="grid-container">
+    <div role="grid" className="grid-container">
       <div className="grid" style={gridStyle}>
         {grid}
       </div>

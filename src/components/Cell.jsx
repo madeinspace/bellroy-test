@@ -8,7 +8,7 @@ const Cell = ({ x, y }) => {
   const isRobot = useCallback(() => isRobotCell(x, y), [isRobotCell, x, y]);
 
   return (
-    <div className={`cell ${isRobot() ? 'robot-cell' : ''}`}>
+    <div role="cell" className={`cell ${isRobot() ? 'robot-cell' : ''}`}>
       {isRobot() && <RobotSVG />}
     </div>
   );
