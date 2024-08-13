@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { RobotProvider } from './components/RobotContext';
 import Grid from './components/Grid';
 import Controls from './components/Controls';

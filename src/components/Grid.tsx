@@ -1,18 +1,18 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, CSSProperties, ReactNode } from 'react';
 import { useRobot } from './RobotContext';
 import Cell from './Cell';
 
 const Grid = () => {
   const { gridSize } = useRobot();
 
-  const gridStyle = {
+  const gridStyle: CSSProperties = {
     display: 'grid',
-    gridTemplateColumns: `repeat(${gridSize}, 50px)`, 
+    gridTemplateColumns: `repeat(${gridSize}, 50px)`,
     gridTemplateRows: `repeat(${gridSize}, 50px)`,
   };
 
   const grid = useMemo(() => {
-    const cells = [];
+    const cells: ReactNode[] = [];
     for (let y = 0; y < gridSize; y++) {
       for (let x = 0; x < gridSize; x++) {
         cells.push(<Cell key={`${x}-${y}`} x={x} y={y} />);

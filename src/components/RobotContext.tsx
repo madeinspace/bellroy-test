@@ -1,19 +1,47 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import Loader from './Loader';
 import { getGridSize } from '../api/getGridSize';
 
-const RobotContext = createContext();
+type Direction = 'N' | 'E' | 'S' | 'W';
 
-export const useRobot = () => useContext(RobotContext);
+type Position = {
+  x: number;
+  y: number;
+};
 
-const directionMap = {
+type RobotState = {
+  position: Position;
+  direction: Direction;
+};
+
+type RobotContextType = {
+  gridSize: number;
+  robotState: RobotState;
+  isRobotCell: (x: number, y: number) => boolean;
+  rotateRobot: () => void;
+  moveRobot: () => void;
+  setDirectionAndMove: (direction: Direction) => void;
+  handleKeyDown: (event: KeyboardEvent) => void;
+};
+
+const RobotContext = createContext<RobotContextType | undefined>(undefined);
+
+export const useRobot = (): RobotContextType => {
+  const context = useContext(RobotContext);
+  if (!context) {
+    throw new Error('useRobot must be used within RobotProvider');
+  }
+  return context;
+};
+
+const directionMap: Record<string, Direction> = {
   ArrowUp: 'N',
   ArrowRight: 'E',
   ArrowDown: 'S',
   ArrowLeft: 'W',
 };
 
-const getNextDirection = (currentDirection) => {
+const getNextDirection = (currentDirection: Direction): Direction => {
   switch (currentDirection) {
     case 'N':
       return 'E';
@@ -28,7 +56,7 @@ const getNextDirection = (currentDirection) => {
   }
 };
 
-const getNextPosition = (currentDirection, { x, y }, gridSize) => {
+const getNextPosition = (currentDirection: Direction, { x, y }: Position, gridSize: number): Position => {
   switch (currentDirection) {
     case 'N':
       return { x, y: y > 0 ? y - 1 : y };
@@ -43,10 +71,15 @@ const getNextPosition = (currentDirection, { x, y }, gridSize) => {
   }
 };
 
-export const RobotProvider = ({ children }) => {
-  const [gridSize, setGridSize] = useState(null);
-  const [robotState, setRobotState] = useState({
-    position: null,
+// Define the props type for the provider component
+type RobotProviderProps = {
+  children: ReactNode;
+};
+
+export const RobotProvider = ({ children }: RobotProviderProps) => {
+  const [gridSize, setGridSize] = useState<number | null>(null);
+  const [robotState, setRobotState] = useState<RobotState>({
+    position: { x: 0, y: 0 },
     direction: 'E',
   });
 
@@ -77,12 +110,12 @@ export const RobotProvider = ({ children }) => {
   const moveRobot = useCallback(() => {
     setRobotState((prevState) => ({
       ...prevState,
-      position: getNextPosition(prevState.direction, prevState.position, gridSize),
+      position: getNextPosition(prevState.direction, prevState.position, gridSize!),
     }));
   }, [gridSize]);
 
   const setDirectionAndMove = useCallback(
-    (direction) => {
+    (direction: Direction) => {
       setRobotState((prevState) => ({
         ...prevState,
         direction,
@@ -93,7 +126,7 @@ export const RobotProvider = ({ children }) => {
   );
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (event: KeyboardEvent) => {
       const direction = directionMap[event.key];
       if (direction) {
         setDirectionAndMove(direction);
@@ -103,8 +136,8 @@ export const RobotProvider = ({ children }) => {
   );
 
   const isRobotCell = useCallback(
-    (x, y) => {
-      return robotState.position?.x === x && robotState.position?.y === y;
+    (x: number, y: number) => {
+      return robotState.position.x === x && robotState.position.y === y;
     },
     [robotState.position]
   );
