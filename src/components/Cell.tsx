@@ -2,7 +2,6 @@ import React, { memo, useCallback } from 'react';
 import { useRobot } from './RobotContext';
 import RobotSVG from './RobotSVG';
 
-// Define the props type for the Cell component using `type`
 type CellProps = {
   x: number;
   y: number;
