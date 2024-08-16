@@ -71,7 +71,6 @@ const getNextPosition = (currentDirection: Direction, { x, y }: Position, gridSi
   }
 };
 
-// Define the props type for the provider component
 type RobotProviderProps = {
   children: ReactNode;
 };
